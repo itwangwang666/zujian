@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./jquery.min.js"></script>
+</head>
+<body>
+    <input name="keywords" id="keywords" type="text" class="sso_wk" autofocus placeholder="请输入您要搜索产品"
+        onkeydown="if(event.keyCode==13){SiteSearch();return false};">
+    <input class="sso_an" type="button" onclick="SiteSearch();" value="搜索">
+    
+    <div class="lsss">历史搜索:</div>
+    <div class="sslb" id="lssslb">
+    </div>
+    <script>
+        //产品搜索并存值
+            var thisurl = "search.aspx?action=search";
+            function SiteSearch() {
+                var sszd = $("#keywords").val();
+                setHistoryItems(sszd);
+                location.href = thisurl + "&sszd=" + sszd + "";
+            };
+            //取值写入页面
+            $(function () {
+                var str = localStorage.historyItems;
+                var s = '';
+                if (str == undefined) {
+                    s = '<div class="rmssts">暂无搜索记录...</div>';
+                    $("#lssslb").append(s);
+                } else {
+                    var strs = new Array();
+                    strs = str.split("|");
+                    for (var i = 0; i < strs.length; i++) {
+                        s += "<a href='search.aspx?action=search&sszd=" + strs[i] + "' >" + strs[i] + "</a>";
+                    }
+                    $("#lssslb").append(s + '<input type="button" class="scls" onclick="clearHistory();" value="清除历史记录">');
+                }
+            });
+            //存值方法,新的值添加在首位
+            function setHistoryItems(keyword) {
+                let { historyItems } = localStorage;
+                if (historyItems === undefined) {
+                    localStorage.historyItems = keyword;
+                } else {
+                    historyItems = keyword + '|' + historyItems.split('|').filter(e => e != keyword).join('|');
+                    localStorage.historyItems = historyItems;
+                }
+            };
+            //清除值
+            function clearHistory() {
+                localStorage.removeItem('historyItems');
+                var div = document.getElementById("lssslb");
+                while (div.hasChildNodes()) //当div下还存在子节点时 循环继续
+                {
+                    div.removeChild(div.firstChild);
+                }
+                $("#lssslb").append('<div class="rmssts">暂无搜索记录...</div>');
+            }
+            //存值方法,新的值添加在首位
+            function setHistoryItems(keyword) {
+                let { historyItems } = localStorage;
+                if (historyItems === undefined) {
+                    localStorage.historyItems = keyword;
+                } else {
+                    historyItems = keyword + '|' + historyItems.split('|').filter(e => e != keyword).join('|');
+                    localStorage.historyItems = historyItems;
+                }
+            };
+            //清除值
+            function clearHistory() {
+                localStorage.removeItem('historyItems');
+                var div = document.getElementById("lssslb");
+                while (div.hasChildNodes()) //当div下还存在子节点时 循环继续
+                {
+                    div.removeChild(div.firstChild);
+                }
+                $("#lssslb").append('<div class="rmssts">暂无搜索记录...</div>');
+            }
+
+    
+    
+    </script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./jquery.min.js"></script>
+    <style>
+        body{
+            text-align: center;
+            padding: 0;
+            margin: 0;
+            background: url('./img/tim.jpg') no-repeat ;
+            background-size:cover;
+        }
+        #box{
+            width: 220px;
+            height: 100px;
+            text-align: center;
+            line-height: 100px;
+            border-radius: 50px;
+            background-color: #251808;
+            margin:100px auto;
+            color: #fff;
+            font-size: 50px;
+        }
+        h1{
+            font-size: 70px;
+            color: #E40003;
+        }
+        #start,
+        #stop,
+        #clear{
+            color: #fff;
+            border:none;
+            width: 100px;
+            height: 50px;
+            border-radius: 25px;
+            font-size: 25px;
+            outline:none;
+        }
+        #start{
+            background-color: green;
+        }
+        #stop{
+            background-color: red;
+        }
+        #clear{
+            background-color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>谁会中大奖呢?</h1>
+    <div id="box">点击开始</div>
+    <button id="start">开始</button>
+    <button id="stop">停止</button>
+    <button id="clear">复位</button>
+
+    <script>
+        $(function () {
+            let arr = ['刘德华', '张学友', '郭富城', '黎明', '梁朝伟', '任贤齐', '周星驰', '吴彦祖','周润发','谢霆锋','成龙']
+            let timerId = ''
+            $('#start').on('click', function () {
+                clearInterval(timerId)
+                timerId = setInterval(() => {
+                    let index = Math.floor(Math.random() * arr.length) + 1
+                    $('#box').text(arr[index])
+                }, 30);
+            })
+
+            $('#stop').on('click', function () {
+                clearInterval(timerId)
+            })
+            $('#clear').on('click', function () {
+                clearInterval(timerId)
+                $('#box').text('点击开始')
+            })
+        })
+
+
+
+    </script>
+</body>
+
+</html>
