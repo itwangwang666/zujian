@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		var arr = [22,43,45,55,44,2,56,43,2,5,3,65,3];
+		var newArr = [];
+		var obj = {};
+		arr.forEach((item,index)=>{
+			if(!obj[item]){
+				obj[item] = 1;
+				newArr.push(item)
+			}
+		})
+		console.log(newArr);
+
+
+	</script>
+</body>
+</html>
