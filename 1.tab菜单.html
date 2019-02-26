@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .box{
+            width: 500px;
+            height: 400px;
+            border:1px solid red;
+            margin:100px auto 0;
+        }
+        .title ul{
+            overflow: hidden;
+        }
+        .title li{
+            float: left;
+            width: 125px;
+            height: 50px;
+            background-color: red;
+            color: #fff;
+            text-align: center;
+            line-height: 50px;
+            font-size: 20px;
+            border-right:1px solid #fff;
+            /* 内减盒子 */
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+        .title .current{
+            background-color: orange;
+            color: blueviolet;
+        }
+        .content div{
+            width: 500px;
+            height: 350px;
+            background-color: greenyellow;
+            line-height: 350px;
+            text-align: center;
+            font-size: 30px;
+            font-weight: bold;
+            display: none;
+        }
+        .content .active{
+            display: block;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="title">
+            <ul id="ulBox">
+                <li class="current">娱乐新闻</li>
+                <li>体育新闻</li>
+                <li>财经新闻</li>
+                <li>军事新闻</li>
+            </ul>
+        </div>
+        <div class="content" id="contentbox">
+            <div class="active">娱乐新闻</div>
+            <div>体育新闻</div>
+            <div>财经新闻</div>
+            <div>军事新闻</div>
+        </div>
+    </div>
+    <script>
+        //点击li让li排他切换,并排他切换到对应得div
+        var ulBox = document.getElementById('ulBox');
+        var lis = ulBox.children;
+
+        var contentbox = document.getElementById('contentbox');
+        var divs = contentbox.children;
+
+        for(var i=0;i<lis.length;i++){
+            lis[i].setAttribute('index',i)
+            lis[i].onclick = changeTab;
+        }
+        //切换Tab菜单
+        function changeTab () {
+            //li排他
+            for(var i=0;i<lis.length;i++){
+                lis[i].className = '';
+            }
+            this.className = 'current';
+
+            //div排他
+            for(var i=0;i<divs.length;i++){
+                divs[i].className = '';
+            }
+            var index = this.getAttribute('index');
+            divs[index].className = 'active';
+        }
+    </script>
+</body>
+</html>

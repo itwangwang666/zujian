@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .box{
+            width: 500px;
+            height: 200px;
+            margin:200px auto 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .box ul{
+            position: absolute;
+            left: 0;
+            top:0;
+            width: 3000px;
+        }
+        .box ul li{
+            float: left;
+        }
+        .box ol{
+            position: absolute;
+            left:50%;
+            bottom: 10px;
+            margin-left:-75px;
+        }
+        .box ol li{
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            /* background-color: orange; */
+            border:2px solid orange;
+            float: left;
+            margin:5px 10px;
+            cursor: pointer;
+        }
+        .box .current{
+            width: 12px;
+            height: 12px;
+            border:none;
+            background-color: yellow;
+        }
+        .box span{
+            width: 30px;
+            height: 40px;
+            background-color: rgba(23, 26, 22, 0.6);
+            line-height: 40px;
+            text-align: center;
+            font-size: 35px;
+            color :rgb(168, 135, 135);
+            position: absolute;
+            top:50%;
+            margin-top:-20px;
+            cursor: pointer;
+            display:none;
+        }
+        .box span:hover{
+            color :#fff;
+        }
+        .box .arr-l{
+            left:0;
+        }
+        .box .arr-r{
+            right:0;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <ul id="imgBox">
+            <li><img src="images/wf1.jpg" alt=""></li>
+            <li><img src="images/wf2.jpg" alt=""></li>
+            <li><img src="images/wf3.jpg" alt=""></li>
+            <li><img src="images/wf4.jpg" alt=""></li>
+            <li><img src="images/wf5.jpg" alt=""></li>
+        </ul>
+        <ol id="dianBox">
+            <li class="current"></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ol>
+        <span class="arr-l" id="arrowLeft">&lt;</span>
+        <span class="arr-r" id="arrowRight">&gt;</span>
+    </div>
+    <script src="animate.js"></script>
+    <script>
+        var arrowLeft = document.getElementById('arrowLeft');
+        var arrowRight = document.getElementById('arrowRight');
+        var imgBox = document.getElementById('imgBox');
+        var dianBox = document.getElementById('dianBox');
+        var dianLis = dianBox.children;
+        var imgLis = imgBox.children;
+        var box = imgBox.parentNode;
+
+        var firstLi = imgLis[0].cloneNode(true);
+        imgBox.appendChild(firstLi);
+
+        var boxWidth = imgBox.parentNode.offsetWidth;
+        var imgCount = 0;
+        arrowRight.onclick = function(){
+            imgCount++;
+            if(imgCount > 5){
+                imgBox.style.left = '0';
+                imgCount = 1;
+            }
+            changeImg(imgCount);
+            changeDian(imgCount);
+        }
+        arrowLeft.onclick = function(){
+            imgCount--;
+            if(imgCount <0){
+                imgBox.style.left = '-2500px';
+                imgCount = 4;
+            }
+            changeImg(imgCount);
+            changeDian(imgCount);
+        }
+
+        for(var i=0;i<dianLis.length;i++){
+            dianLis[i].setAttribute('index',i);
+            dianLis[i].onclick = dianClick;
+        }
+        function dianClick () {
+            var index = this.getAttribute('index');
+            changeImg(index);
+            changeDian(index);
+            imgCount = index;
+        }
+
+        function changeImg (num) {
+            var move = -num*boxWidth;
+            animate(imgBox,move);
+        }
+        function changeDian (num) {
+            for(var i=0;i<dianLis.length;i++){
+                dianLis[i].className = '';
+            }
+            if(num === 5){
+                num = 0;
+            }
+            dianLis[num].className = 'current';
+        }
+
+        var timer = setInterval(function(){
+            arrowRight.click();
+        },2000);
+        box.onmouseenter = function () {
+            arrowRight.style.display = 'block';
+            arrowLeft.style.display = 'block';
+            clearInterval(timer);
+        }
+        box.onmouseleave = function () {
+            arrowRight.style.display = 'none';
+            arrowLeft.style.display = 'none';
+            timer = setInterval(function(){
+                arrowRight.click();
+            },2000);
+        }
+    </script>
+</body>
+</html>
