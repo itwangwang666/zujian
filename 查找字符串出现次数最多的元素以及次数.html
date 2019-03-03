@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //思路:遍历数组,拿到一个字符,并将之以 "字符":出现次数 的key:value形式存到对象中.
+        //如果此字符已经出现过,便将它的出现次数+1
+        //最后遍历对象,比较每个key的value值,取到出现最多的字符和其出现的次数
+        var str = "abcdeeeeeeee";
+        function getMaxCount(str) {
+            var Obj = {};     //定义一个空对象
+            //charAt() 方法可返回指定位置的字符。
+            for (let i = 0; i < str.length; i++) {
+                if (Obj[str.charAt(i)]) {
+                    Obj[str.charAt(i)]++;
+
+                } else {
+                    Obj[str.charAt(i)] = 1;
+
+                }
+
+            }
+            // console.log(Obj)
+            let num = 0;
+            let char = "";
+            for (var key in Obj) {
+                if (Obj[key] > num) {
+                    num = Obj[key];
+                    char = key;
+
+                }
+
+            }
+            console.log("出现最多次数的是:" + char + ",出现了:" + num + "次")
+
+        }
+        getMaxCount(str)
+    </script>
+</body>
+
+</html>
