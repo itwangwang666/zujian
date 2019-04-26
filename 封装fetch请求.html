@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /**
+         * fetch请求封装
+         */let fetchData = async (url, method, data) => {
+            let options;
+            let dataStr = '';
+            const headers = {
+                'Accept': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            };
+            // get 请求
+            if (method === 'get') {
+                if (typeof data === 'object') {
+                    Object.keys(data).forEach(key => {
+                        dataStr += `${key}=${data[key]}&`
+                    });
+                    if (dataStr) {
+                        dataStr = dataStr.substring(0, dataStr.length - 1)
+                    };
+                    url = `${url}?${dataStr}`;
+                }
+                options = {
+                    method: 'GET',
+                    headers,
+                }
+            } else {
+                let formData = new FormData();
+                for (let key in data) {
+                    formData.append(key, data[key])
+                }
+                options = {
+                    method: 'POST',
+                    body: formData
+                }
+            }
+            let response = await fetch(url, options);
+            let res = await response.json();
+            return res;
+        }
+        // fetchData('http://www.lovegf.cn:8899/api/addproduct', 'get',{})
+        // .then(res => {
+        //     console.log(res)
+        // })
+        fetchData('http://www.lovegf.cn:8899/api/addproduct', 'post', { name: '品牌名称' })
+            .then(res => {
+                console.log(res)
+            })
+    </script>
+</body>
+
+</html>
